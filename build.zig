@@ -11,12 +11,13 @@ pub fn build(b: *std.Build) void {
 
     const optimize = b.standardOptimizeOption(.{});
 
-    const exe = b.addExecutable(.{
-        .name = "freestands.bin",
+    const kernel = b.addObject(.{
+        .name = "kernel.o",
         .root_source_file = .{ .path = "src/main.zig" },
         .target = target,
         .optimize = optimize,
     });
 
-    b.installArtifact(exe);
+    const install_kernel = b.addInstallFile(kernel.getEmittedBin(), "../build/kernel.o");
+    b.getInstallStep().dependOn(&install_kernel.step);
 }
