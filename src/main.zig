@@ -1,3 +1,3 @@
-export fn _start() void {
+export fn _start() noreturn {
     while (true) {}
 }
