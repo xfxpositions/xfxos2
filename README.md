@@ -5,6 +5,14 @@ idk, i hope i can do with zig, if i can't do, i must go to c finally.
 
 # Run
 
+## Dependencies
+
+### Arch
+
+```
+sudo pacman -S zig qemu-full gcc grub nasm xorriso mtools
+```
+
 ## Clone the repo
 
 ```sh
