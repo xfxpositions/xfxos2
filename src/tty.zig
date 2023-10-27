@@ -11,21 +11,23 @@ pub const Color = enum(u4) { BLACK = 0, BLUE = 1, GREEN = 2, CYAN = 3, RED = 4, 
 ///
 pub const VgaEntry = packed struct {
     char: u8,
-    bg: Color, // foreground color
-    fg: Color, // background color
+    bg: Color = Color.BLACK, // foreground color
+    fg: Color.WHITE, // background color
 };
 
 pub const Tty = struct {
     buffer: *volatile [VGA_SIZE]VgaEntry,
-    pub fn init(buffer: *volatile [VGA_SIZE]VgaEntry) Tty {
+    pub fn init() Tty {
+        var buffer: *volatile [25 * 80]VgaEntry = @ptrFromInt(VGA_BUFFER);
+
         return Tty{ .buffer = buffer };
     }
     pub fn put_chr(self: Tty, x: *const u8, y: *const u8, entry: VgaEntry) void {
         self.buffer[x.* * y.*] = entry;
     }
-    pub fn test1(self: Tty, x: u8, y: u8) void {
-        _ = y;
-        _ = x;
-        _ = self;
+    pub fn clear(self: Tty) void {
+        for (0..self.buffer.len) |i| {
+            self.buffer[i] = VgaEntry{ .char = ' ', .bg = Color.BLACK, .fg = Color.BLACK };
+        }
     }
 };
