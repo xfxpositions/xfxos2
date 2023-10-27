@@ -10,4 +10,4 @@ d=build/isofiles/boot/grub
 mkdir -p "$d" && cp grub.cfg "$d"
 
 sudo grub-mkrescue -o build/os.iso build/isofiles # create iso
-qemu-system-i386 build/os.iso # run with qemu
+qemu-system-i386 -drive format=raw,file=build/os.iso # run with qemu
