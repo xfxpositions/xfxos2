@@ -17,7 +17,8 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
-
+    kernel.bundle_compiler_rt = true;
     const install_kernel = b.addInstallFile(kernel.getEmittedBin(), "../build/kernel.o");
+
     b.getInstallStep().dependOn(&install_kernel.step);
 }
